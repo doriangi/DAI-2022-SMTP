@@ -1,7 +1,20 @@
 package org.example;
 
+import org.example.mail.Mail;
+import org.example.smtp.SmtpClient;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        String mailFrom = "gilliozdorian@gmail.com";
+        String[] rcptTo = { "dorian.gillioz@heig-vd.ch" };
+        String from = "doriancool@gmail.com";
+        String[] to = { "gilliozdorian@gmail.com" };
+        String subject = "Bonjour";
+        String content = "Bonjour, voici mon mail\nbonne journee";
+
+        Mail mail = new Mail(mailFrom, rcptTo, from, to, subject, content);
+        SmtpClient client = new SmtpClient("localhost", 25);
+
+        client.sendMail(mail);
     }
 }
