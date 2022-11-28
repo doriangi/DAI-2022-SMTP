@@ -52,8 +52,8 @@ public class SmtpClient {
             read = reader.readLine();
             System.out.println(read);
 
+            send("Content-Type: text/plain; charset=\"utf-8\"\r\n");
             send("From: " + mail.getFrom() + "\r\n");
-            writer.flush();
 
             StringBuilder to = new StringBuilder();
             to.append("To: ");
@@ -63,15 +63,12 @@ public class SmtpClient {
             }
             to.append("\r\n");
             send(to.toString());
-            writer.flush();
 
             send("Subject: " + mail.getSubject() + "\r\n");
-            writer.flush();
 
             send("\r\n" + mail.getContent() + "\r\n.\r\n");
             read = reader.readLine();
             System.out.println(read);
-            writer.flush();
 
             socket.close();
             reader.close();
