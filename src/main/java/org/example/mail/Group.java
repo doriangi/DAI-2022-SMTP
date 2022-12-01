@@ -10,7 +10,7 @@ public class Group {
         group.add(person);
     }
 
-    public List<String> getGroup() {
-        return group;
+    public String[] getGroup() {
+        return group.toArray(new String[0]);
     }
 }

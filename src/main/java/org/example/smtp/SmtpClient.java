@@ -98,6 +98,10 @@ public class SmtpClient {
         }
     }
 
+    /**
+     * Envoie le message passé en paramètre au serveur
+     * @param message Message à enoyer
+     */
     private void send(String message) {
         try {
             System.out.print(message);
