@@ -52,13 +52,58 @@ public class FileReader {
         List<String> victims = new ArrayList<>();
         Random rdm = new Random();
         String victim;
-        // Séléctionne nbr_victims au hasard parmis les victimes possibles
+        // Sélectionne nbr_victims au hasard parmis les victimes possibles
         while (victims.size() < nbr_victims) {
             victim = all_emails.get(rdm.nextInt(all_emails.size()));
             if(!victims.contains(victim)) victims.add(victim);
         }
 
         return victims;
+    }
+
+    /**
+     * Choisis un message au hasard dans le fichier des messages
+     * @param file Fichier contenant la liste des messages avec l'objet
+     * @return Un tableau avec en première position l'objet du mail et en deuxième position le message
+     */
+    public String[] readMessage(File file) {
+        String[] message = new String[2];
+        List<String> message_list = readAllMessage(file); // Récupère tous les messages du fichier
+
+        Random rdm = new Random();
+        int msg_id = rdm.nextInt(message_list.size());
+
+        message[0] = message_list.get(msg_id).split("\r\n", 2)[0];
+        message[1] = message_list.get(msg_id).split("\r\n", 2)[1];
+
+        return message;
+    }
+
+    /**
+     * Récupère tous les messages du fichier
+     * Note : Les objets et les messages ne sont pas séparés dans la liste retour
+     *        Les blocs de messages doivent être séparés par un \r\n---\r\n
+     * @param file Le fichier contenant tous les messages
+     * @return La liste de tous les blocs messages (objet et message non-séparés)
+     */
+    private List<String> readAllMessage(File file) {
+        List<String> message_list = new ArrayList<>();
+        try (FileInputStream input = new FileInputStream(file);
+             InputStreamReader reader = new InputStreamReader(input, StandardCharsets.UTF_8)) {
+            StringBuilder msg = new StringBuilder();
+            while(reader.ready()) { // Lit tout le contenu du fichier
+                msg.append((char)reader.read());
+            }
+            String raw = msg.toString();  // bloc contenant tout les messages non-séparés en différents messages
+
+            // Séparation du contenu en plusieurs messages par le délimiteur ---
+            message_list = List.of(raw.split("\r\n---\r\n"));
+
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE, e.getMessage());
+        }
+
+        return message_list;
     }
 
     /**
