@@ -1,13 +1,27 @@
 package org.example.mail;
 
+import java.util.List;
+
+/**
+ * Stocke les informations d'un mail
+ */
 public class Mail {
     private String mailFrom;
-    private String rcptTo[];
+    private String[] rcptTo;
     private String from;
-    private String to[];
+    private String[] to;
     private String subject;
     private String content;
 
+    /**
+     * Constructeur du mail
+     * @param mailFrom  Section "MAIL FROM:" du mail
+     * @param rcptTo    Section "RCPT TO:" du mail
+     * @param from      Section "From:" du mail dans la partie Data
+     * @param to        Section "To:" du mail dans la partie Data
+     * @param subject   Section objet du mail dans la partie Data
+     * @param content   Section contenu du mail dans la partie Data
+     */
     public Mail(String mailFrom, String[] rcptTo, String from, String[] to, String subject, String content) {
         this.mailFrom = mailFrom;
         this.rcptTo = rcptTo;

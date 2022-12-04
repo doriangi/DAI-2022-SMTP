@@ -6,6 +6,10 @@ import java.util.List;
 public class Group {
     private List<String> group = new ArrayList<>();
 
+    public Group(List<String> group) {
+        this.group = group;
+    }
+
     public void addPerson(String person) {
         group.add(person);
     }
