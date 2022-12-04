@@ -32,11 +32,14 @@ public class PrankManager {
      * Ajoute un groupe dans la campagne de prank
      * @param victimFilePath Le chemin du fichier qui contient les victimes
      * @param nbrVictims     Le nombre de victimes que l'on veut piéger dans ce groupe
+     * @return la liste des victimes du groupe et null en cas d'erreur
      */
-    public void addGroup(String victimFilePath, int nbrVictims) {
-        if (groups.size() >= size) return;
+    public List<String> addGroup(String victimFilePath, int nbrVictims) {
+        if (groups.size() >= size) return null;
         File v = new File(victimFilePath);
-        groups.add(fr.readVictims(v, nbrVictims));
+        List<String> victims = fr.readVictims(v, nbrVictims);
+        groups.add(victims);
+        return victims;
     }
 
     /**
@@ -73,7 +76,7 @@ public class PrankManager {
      * @return Un Smtp Client qui permettra l'envoi du mail
      */
     public SmtpClient connect(String configFilePath) {
-        File configs = new File("C:\\Users\\gilli\\OneDrive\\Documents\\DAI\\DAI-2022-SMTP\\config\\options\\params.txt");
+        File configs = new File(configFilePath);
         String address = fr.readAddress(configs);
         int port = fr.readPort(configs);
         return new SmtpClient(address, port);
