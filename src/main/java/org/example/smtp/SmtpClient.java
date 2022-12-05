@@ -95,6 +95,7 @@ public class SmtpClient {
                     LOG.log(Level.SEVERE, e3.getMessage(), e3);
                 }
             }
+            LOG.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 

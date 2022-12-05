@@ -35,7 +35,7 @@ public class FileReader {
             throw new RuntimeException("Le nombre de victimes doit être >= 3\n");
         }
         if (all_emails.size() < nbr_victims) {
-            throw new RuntimeException("Le nombre de victimes voulu est inférieur au nombre de victimes disponibles\n");
+            throw new RuntimeException("Le nombre de victimes voulu est supérieur au nombre de victimes disponibles\n");
         }
 
         for (String email : all_emails) {

@@ -32,14 +32,12 @@ public class PrankManager {
      * Ajoute un groupe dans la campagne de prank
      * @param victimFilePath Le chemin du fichier qui contient les victimes
      * @param nbrVictims     Le nombre de victimes que l'on veut piéger dans ce groupe
-     * @return la liste des victimes du groupe et null en cas d'erreur
      */
-    public List<String> addGroup(String victimFilePath, int nbrVictims) {
-        if (groups.size() >= size) return null;
+    public void addGroup(String victimFilePath, int nbrVictims) {
+        if (groups.size() >= size) return;
         File v = new File(victimFilePath);
         List<String> victims = fr.readVictims(v, nbrVictims);
         groups.add(victims);
-        return victims;
     }
 
     /**
@@ -71,11 +69,11 @@ public class PrankManager {
     }
 
     /**
-     * Permet de se connecter au serveur Mail en fonction des configurations données
+     * Permet de se créer un client smtp au serveur Mail en fonction des configurations données
      * @param configFilePath Chemin du fichier config qui contient l'adresse et le port du serveur
      * @return Un Smtp Client qui permettra l'envoi du mail
      */
-    public SmtpClient connect(String configFilePath) {
+    public SmtpClient client(String configFilePath) {
         File configs = new File(configFilePath);
         String address = fr.readAddress(configs);
         int port = fr.readPort(configs);
