@@ -1,6 +1,6 @@
 package org.example.prank;
 
-import org.example.FileReader;
+import org.example.file.FileReader;
 import org.example.mail.Mail;
 import org.example.smtp.SmtpClient;
 
@@ -10,6 +10,7 @@ import java.util.List;
 
 /**
  * Permet la création de groupes de victimes et la préparation d'un mail piégé à envoyer
+ * @author Dorian Gillioz & Oscar Baume
  */
 public class PrankManager {
 
@@ -32,6 +33,7 @@ public class PrankManager {
      * Ajoute un groupe dans la campagne de prank
      * @param victimFilePath Le chemin du fichier qui contient les victimes
      * @param nbrVictims     Le nombre de victimes que l'on veut piéger dans ce groupe
+     * @throws RuntimeException en cas d'erreur pour la sélection de messages
      */
     public void addGroup(String victimFilePath, int nbrVictims) {
         if (groups.size() >= size) return;
@@ -58,6 +60,7 @@ public class PrankManager {
     public Mail setPrankMail(List<String> group, String msgFilePath) {
         String from = group.get(0);
         String[] to = new String[group.size() - 1];
+        // Copie les éléments de group dans to à partir du deuxième élément de group
         System.arraycopy(group.toArray(new String[0]), 1, to, 0, group.size() - 1);
 
         File msg = new File(msgFilePath);
@@ -69,9 +72,9 @@ public class PrankManager {
     }
 
     /**
-     * Permet de se créer un client smtp au serveur Mail en fonction des configurations données
+     * Permet de créer un client smtp au serveur Mail en fonction des configurations données
      * @param configFilePath Chemin du fichier config qui contient l'adresse et le port du serveur
-     * @return Un Smtp Client qui permettra l'envoi du mail
+     * @return Une instance SmtpClient qui permettra l'envoi du mail
      */
     public SmtpClient client(String configFilePath) {
         File configs = new File(configFilePath);

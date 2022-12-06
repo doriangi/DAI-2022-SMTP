@@ -36,7 +36,11 @@ ne sera pas utile dans l'exécution de notre programme, car c'est le programme q
 ## Comment utiliser l'application pour faire un prank
 Pour compiler le programme et créer son fichier exécutable .jar, il faut effectuer la commande 
 ```mvn clean install``` à la racine du projet. L'exécutable .jar se situera dans le répertoire 
-```target```.
+```target```. 
+
+**Attention :** Pour que le programme ait accès aux configurations du serveur, le .jar doit rester
+dans le répertoire ```target```.
+
 L'application de prank a besoin de 4 paramètres pour s'effectuer correctement :
 1. Le nombre de groupes à créer pour leur envoyer des mails. Il doit être entier
 2. Le nombre de personnes par groupe. Il doit être >= 3 et entier.
@@ -54,6 +58,9 @@ l'indiquer quand il s'agit du dernier message du fichier.
 
 Une fois ces paramètres correctement donnés, un mail par groupe, constitué de n personnes 
 passé en paramètre, va être envoyé contenant un message du fichier choisi au hasard.
+
+_Note :_ Des exemples de fichiers pour les messages et les emails se situent respectivement dans 
+les répertoires ```config/messages/messages.txt``` et ```config/victims/victims.txt```.
 
 Exemple d'exécution :
 ```
@@ -141,7 +148,7 @@ messages depuis la fonction ```readAllMessages``` qui retourne une liste avec un
 ``` java
 String readAddress(File file) et int readPort(File file)
 ```
-Ces fonctions ont un fonctionnnement similaire : elles vont récupérer dans un fichier config
+Ces fonctions ont un fonctionnement similaire : elles vont récupérer dans un fichier config
 l'adresse du serveur et son port. Pour l'adresse, la fonction va chercher dans le fichier le 
 format ```ip=address``` et pour le port le format ```port=port```.
 

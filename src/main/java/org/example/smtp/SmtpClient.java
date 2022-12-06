@@ -8,30 +8,50 @@ import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Classe qui permet la connexion au serveur SMTP donné en paramètre
+ * @author Dorian Gillioz & Oscar Baume
+ */
 public class SmtpClient {
 
     private static final Logger LOG = Logger.getLogger(SmtpClient.class.getName());
 
-    private String address;
-    private int port;
+    /** Adresse du serveur SMTP */
+    private final String address;
+    /** Port du serveur SMTP */
+    private final int port;
 
+    /** Socket pour se connecter au serveur */
     private Socket socket = null;
+    /** Lit les réponses du serveur */
     private BufferedReader reader = null;
+    /** Écrit au serveur*/
     private BufferedWriter writer = null;
 
+    /**
+     * Constructeur du SmtpClient avec les informations pour se connecter au serveur
+     * @param address Adresse du serveur SMTP
+     * @param port    Port du serveur SMTP
+     */
     public SmtpClient(String address, int port) {
         this.address = address;
         this.port = port;
     }
 
+    /**
+     * Permet d'envoyer un mail passé en paramètre au serveur,
+     * la fonction va aussi gérer la connexion au serveur
+     * @param mail Le mail à envoyer au serveur
+     */
     public void sendMail(Mail mail) {
         try {
             socket = new Socket(address, port);
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
             writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8));
+
             String read = reader.readLine();
             System.out.println(read);
-            send("EHLO localhost\r\n");
+            send("EHLO " + address + "\r\n");
             do {
                 read = reader.readLine();
                 System.out.println(read);
@@ -73,7 +93,7 @@ public class SmtpClient {
             socket.close();
             reader.close();
             writer.close();
-        } catch (IOException e) {
+        } catch (IOException | RuntimeException e) {
             if (socket != null) {
                 try {
                     socket.close();
@@ -101,7 +121,8 @@ public class SmtpClient {
 
     /**
      * Envoie le message passé en paramètre au serveur
-     * @param message Message à enoyer
+     * @param message Message à envoyer
+     * @throws RuntimeException en cas d'erreur d'envoi de message
      */
     private void send(String message) {
         try {
@@ -109,7 +130,7 @@ public class SmtpClient {
             writer.write(message);
             writer.flush();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException();
         }
     }
 }

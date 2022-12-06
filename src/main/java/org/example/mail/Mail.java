@@ -1,17 +1,17 @@
 package org.example.mail;
 
-import java.util.List;
-
 /**
  * Stocke les informations d'un mail
+ * @author Dorian Gillioz & Oscar Baume
  */
 public class Mail {
-    private String mailFrom;
-    private String[] rcptTo;
-    private String from;
-    private String[] to;
-    private String subject;
-    private String content;
+    // Variables pour construire le mail
+    private final String mailFrom;
+    private final String[] rcptTo;
+    private final String from;
+    private final String[] to;
+    private final String subject;
+    private final String content;
 
     /**
      * Constructeur du mail
@@ -30,6 +30,8 @@ public class Mail {
         this.subject = subject;
         this.content = content;
     }
+
+    // Getters pour les paramètres du Mail
 
     public String getMailFrom() {
         return mailFrom;

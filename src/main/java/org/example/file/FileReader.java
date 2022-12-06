@@ -1,6 +1,4 @@
-package org.example;
-
-import org.example.mail.Group;
+package org.example.file;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,6 +13,7 @@ import java.util.logging.Logger;
 
 /**
  * Classe qui permet de lire le contenu de fichiers pour préparer le prank
+ * @author Dorian Gillioz & Oscar Baume
  */
 public class FileReader {
     private static final Logger LOG = Logger.getLogger(FileReader.class.getName());
@@ -26,9 +25,10 @@ public class FileReader {
      * @param nbr_victims Le nombre de victimes à piéger
      *                    Note : doit être >= 3
      * @return La liste des victimes
+     * @throws RuntimeException en cas d'erreur pour la sélection des victimes
      */
     public List<String> readVictims(File file, int nbr_victims) {
-        List<String> all_emails = getStrings(file);     // Liste de tous les emails
+        List<String> all_emails = getStrings(file); // Liste de tous les emails
         StringBuilder error = new StringBuilder();  // Contient les emails erronés
 
         if (nbr_victims < 3) {
@@ -62,21 +62,19 @@ public class FileReader {
     }
 
     /**
-     * Choisis un message au hasard dans le fichier des messages
+     * Choisit un message au hasard dans le fichier des messages
      * @param file Fichier contenant la liste des messages avec l'objet
      * @return Un tableau avec en première position l'objet du mail et en deuxième position le message
      */
     public String[] readMessage(File file) {
         String[] message = new String[2];
-        List<String> message_list = readAllMessage(file); // Récupère tous les messages du fichier
+        List<String> message_list = readAllMessages(file); // Récupère tous les messages du fichier
 
         Random rdm = new Random();
         int msg_id = rdm.nextInt(message_list.size());
 
-        message[0] = message_list.get(msg_id).split("\r\n", 2)[0];
-        message[1] = message_list.get(msg_id).split("\r\n", 2)[1];
-
-        return message;
+        // Choisit un message au hasard et sépare entre l'objet et le contenu
+        return message_list.get(msg_id).split("\r\n", 2);
     }
 
     /**
@@ -86,7 +84,7 @@ public class FileReader {
      * @param file Le fichier contenant tous les messages
      * @return La liste de tous les blocs messages (objet et message non-séparés)
      */
-    private List<String> readAllMessage(File file) {
+    private List<String> readAllMessages(File file) {
         List<String> message_list = new ArrayList<>();
         try (FileInputStream input = new FileInputStream(file);
              InputStreamReader reader = new InputStreamReader(input, StandardCharsets.UTF_8)) {
@@ -94,7 +92,7 @@ public class FileReader {
             while(reader.ready()) { // Lit tout le contenu du fichier
                 msg.append((char)reader.read());
             }
-            String raw = msg.toString();  // bloc contenant tout les messages non-séparés en différents messages
+            String raw = msg.toString();  // bloc contenant tous les messages non-séparés en différents messages
 
             // Séparation du contenu en plusieurs messages par le délimiteur ---
             message_list = List.of(raw.split("\r\n---\r\n"));
@@ -133,6 +131,7 @@ public class FileReader {
         List<String> params = getStrings(file);
         String[] split;
         for (String param : params) {
+            // On sépare le message avec le = pour savoir s'il s'agit du champ port qu'on lit
             split = param.split("=");
             if (split[0].equals("port")) return Integer.parseInt(split[1]);
         }
@@ -149,14 +148,16 @@ public class FileReader {
 
         try (FileInputStream input = new FileInputStream(file);
              InputStreamReader reader = new InputStreamReader(input, StandardCharsets.UTF_8)) {
-            char c = 0;
-            StringBuilder mail = new StringBuilder();
+            char c;
+            StringBuilder line = new StringBuilder();
             while(reader.ready()) {
+                // Va lire caractère par caractère jusqu'à atteindre la fin de ligne
                 while (reader.ready() && (c = (char)reader.read()) != '\r') {
-                    if (c != '\n') mail.append(c);
+                    if (c != '\n') line.append(c);
                 }
-                params.add(mail.toString());
-                mail = new StringBuilder();
+                // Ajoute la ligne lue
+                params.add(line.toString());
+                line = new StringBuilder();
             }
         } catch (IOException e) {
             LOG.log(Level.SEVERE, e.getMessage());
