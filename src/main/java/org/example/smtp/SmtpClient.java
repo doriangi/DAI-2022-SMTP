@@ -58,11 +58,11 @@ public class SmtpClient {
                 // To detect if we printed all the params
             } while (!read.split(" ")[0].equals("250"));
 
-            send("MAIL FROM: " + mail.getMailFrom() + "\r\n");
+            send("MAIL FROM: " + mail.mailFrom() + "\r\n");
             read = reader.readLine();
             System.out.println(read);
 
-            for (String person : mail.getRcptTo()) {
+            for (String person : mail.rcptTo()) {
                 send("RCPT TO: " + person + "\r\n");
                 read = reader.readLine();
                 System.out.println(read);
@@ -73,20 +73,20 @@ public class SmtpClient {
             System.out.println(read);
 
             send("Content-Type: text/plain; charset=\"utf-8\"\r\n");
-            send("From: " + mail.getFrom() + "\r\n");
+            send("From: " + mail.from() + "\r\n");
 
             StringBuilder to = new StringBuilder();
             to.append("To: ");
-            to.append(mail.getTo()[0]);
-            for (int i = 1; i < mail.getTo().length; ++i) {
-                to.append(", ").append(mail.getTo()[i]);
+            to.append(mail.to()[0]);
+            for (int i = 1; i < mail.to().length; ++i) {
+                to.append(", ").append(mail.to()[i]);
             }
             to.append("\r\n");
             send(to.toString());
 
-            send("Subject: " + mail.getSubject() + "\r\n");
+            send("Subject: " + mail.subject() + "\r\n");
 
-            send("\r\n" + mail.getContent() + "\r\n.\r\n");
+            send("\r\n" + mail.content() + "\r\n.\r\n");
             read = reader.readLine();
             System.out.println(read);
 

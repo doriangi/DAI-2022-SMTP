@@ -19,8 +19,7 @@ public class FileReader {
     private static final Logger LOG = Logger.getLogger(FileReader.class.getName());
 
     /**
-     * Lit la liste des victimes du fichier et en choisit un nombre de victimes (>= 3) donné,
-     * la première victime sera passée pour l'envoyeur
+     * Lit la liste des victimes du fichier et en choisit un nombre de victimes (>= 3) donné
      * @param file Le fichier de victimes
      * @param nbr_victims Le nombre de victimes à piéger
      *                    Note : doit être >= 3

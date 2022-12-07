@@ -52,7 +52,8 @@ public class PrankManager {
     }
 
     /**
-     * Prépare le mail piège du groupe en paramètre
+     * Prépare le mail piège du groupe en paramètre.
+     * L'émetteur du mail sera la première personne du groupe
      * @param group         Le groupe à piéger
      * @param msgFilePath   Le chemin qui contient la liste des messages à envoyer
      * @return Un objet Mail qui contient toutes les infos du groupe ainsi que le message à envoyer
