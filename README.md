@@ -29,12 +29,12 @@ localhost, soit via la commande `telnet localhost 25`.
 
 L'interface web une fois lancée devrait ressembler à ça.
 
-![interface_web.jpg](figures%2Finterface_web.jpg)
+![interface_web.jpg](figures/interface_web.jpg)
 
 La commande exécutée devrait avoir cet affichage. Le telnet permet d'envoyer une requête SMTP, mais
 ne sera pas utile dans l'exécution de notre programme, car c'est le programme qui va s'en occuper.
 
-![telnet.jpg](figures%2Ftelnet.jpg)
+![telnet.jpg](figures/telnet.jpg)
 
 ## Comment utiliser l'application pour faire un prank
 Pour compiler le programme et créer son fichier exécutable .jar, il faut effectuer la commande 
@@ -126,7 +126,7 @@ Yipyiipyiypy
 Le projet est divisé en 4 classes différentes qui vont chacun gérer un aspect différent de l'application.
 
 ### Diagramme de classe :
-![uml_labo_smtp.jpg](figures%2Fuml_labo_smtp.jpg)
+![uml_labo_smtp.jpg](figures/uml_labo_smtp.jpg)
 
 ### Record (Classe) Mail
 Le record Mail contient toutes les informations à écrire dans un mail à envoyer. C'est-à-dire 
@@ -192,7 +192,7 @@ void send(String message)
 Cette fonction permet d'envoyer un message au serveur.
 
 ### Exemple interaction client-serveur
-![client_serveur.png](figures%2Fclient_serveur.png)
+![client_serveur.png](figures/client_serveur.png)
 - En vert : Réponses du serveur
 - En orange : Commandes du client
   - `EHLO localhost` : Initie la conversation SMTP
