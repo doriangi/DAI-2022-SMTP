@@ -192,6 +192,13 @@ void send(String message)
 Cette fonction permet d'envoyer un message au serveur.
 
 ### Exemple interaction client-serveur
-![client_serveur.jpg](figures%2Fclient_serveur.jpg)
+![client_serveur.png](figures%2Fclient_serveur.png)
 - En vert : Réponses du serveur
-- En orange : Messages du client
+- En orange : Commandes du client
+  - `EHLO localhost` : Initie la conversation SMTP
+  - `MAIL FROM:` et `From:` : Correspond au premier mail du groupe des victimes
+  - `RCPT TO:` : Mails des victimes
+  - `DATA` : Début du message
+  - `To:` : Mails des victimes sans le faux émetteur
+  - `Subject:` : Objet du mail
+  - Le reste jusqu'au `.` correspond au contenu du message
