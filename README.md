@@ -199,6 +199,7 @@ Cette fonction permet d'envoyer un message au serveur.
   - `MAIL FROM:` et `From:` : Correspond au premier mail du groupe des victimes
   - `RCPT TO:` : Mails des victimes
   - `DATA` : Début du message
+  - `Content-Type:` : Format d'encodage du mail => UTF-8
   - `To:` : Mails des victimes sans le faux émetteur
   - `Subject:` : Objet du mail
   - Le reste jusqu'au `.` correspond au contenu du message

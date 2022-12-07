@@ -6,6 +6,8 @@ import org.example.smtp.SmtpClient;
 
 import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
@@ -33,11 +35,11 @@ public class Main {
             return;
         }
 
-        PrankManager generator = new PrankManager(nbr_groups);
+        PrankManager manager = new PrankManager(nbr_groups);
 
         for (int i = 0; i < nbr_groups; ++i) {
             try {
-                generator.addGroup(victim_path, nbr_victims);
+                manager.addGroup(victim_path, nbr_victims);
             } catch (RuntimeException e) {
                 System.out.println(e.getMessage());
                 return;
@@ -45,13 +47,13 @@ public class Main {
         }
 
         String config = "..\\config\\options\\params.txt";
-        SmtpClient client = generator.client(config);
+        SmtpClient client = manager.client(config);
 
-        Mail prank;
+        List<Mail> pranks = new ArrayList<>();
         for (int i = 0; i < nbr_groups; ++i) {
             System.out.printf("Mail #%d :\n", i + 1);
-            prank = generator.setPrankMail(generator.getGroup(i), msg_path);
-            client.sendMail(prank);
+            pranks.add(manager.setPrankMail(manager.getGroup(i), msg_path));
+            client.sendMail(pranks.get(i));
             System.out.println();
         }
 
