@@ -20,12 +20,15 @@ mails aux destinataires du mail.
 Avoir java, maven et docker installé.
 
 ## Comment mettre en place le serveur MockMock ?
-Pour mettre en place le serveur MockMock, il faut aller dans le répertoire docker à la racine 
+Pour mettre en place le serveur MockMock, commencer par lancer Docker. Il faut ensuite aller dans le répertoire docker à la racine 
 du projet, ouvrir une invite de commande dans ce répertoire et exécuter dans un premier temps le 
 script `build-image.sh`, ce script permet de créer le container docker contenant le serveur. 
 Une fois le container créé, il faut exécuter le script `run-container.sh`. Ce script lance 
 le serveur SMTP. Le serveur peut être accédé soit via l'interface web sur le port 8282 à l'adresse
 localhost, soit via la commande `telnet localhost 25`.
+
+Voici ce à quoi devrait ressembler votre prompt après avoir lancer la commande `sh run-container.sh`: 
+![server_running.jpg](figures/server_running.png)
 
 L'interface web une fois lancée devrait ressembler à ça.
 
